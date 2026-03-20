@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+
+            # Pull latest deploy config
+            cd ~/vaultwarden-deploy
+
+            # Pull latest vaultwarden image
+            docker compose pull
+
+            # Restart with zero manual downtime (compose handles it)
+            docker compose up -d
+
+            # Remove old images
+            docker image prune -f
+
+      - name: Verify healthy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sleep 5
+            docker inspect --format='{{.State.Health.Status}}' vaultwarden | grep -q healthy || \
+              (echo "Container unhealthy after deploy" && exit 1)
