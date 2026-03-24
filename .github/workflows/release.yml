@@ -98,8 +98,12 @@ jobs:
           if [[ -n "${GIT_EXACT_TAG}" ]]; then
               echo "SOURCE_VERSION=${GIT_EXACT_TAG}" | tee -a "${GITHUB_ENV}"
           else
-              GIT_LAST_TAG="$(git describe --tags --abbrev=0)"
-              echo "SOURCE_VERSION=${GIT_LAST_TAG}-${SOURCE_COMMIT:0:8}" | tee -a "${GITHUB_ENV}"
+              GIT_LAST_TAG="$(git describe --tags --abbrev=0 2>/dev/null || true)"
+              if [[ -n "${GIT_LAST_TAG}" ]]; then
+                  echo "SOURCE_VERSION=${GIT_LAST_TAG}-${SOURCE_COMMIT:0:8}" | tee -a "${GITHUB_ENV}"
+              else
+                  echo "SOURCE_VERSION=${SOURCE_COMMIT:0:8}" | tee -a "${GITHUB_ENV}"
+              fi
           fi
 
       # Login to Docker Hub
