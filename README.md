@@ -1,5 +1,3 @@
-![Quoota Vault Logo](./resources/vaultwarden-logo-auto.svg)
-
 An alternative server implementation of the Bitwarden Client API, written in Rust and compatible with [official Bitwarden clients](https://bitwarden.com/download/) [[disclaimer](#disclaimer)], perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
 
 ---
@@ -111,23 +109,6 @@ services:
 
 <br>
 
-## Get in touch
-
-Have a question, suggestion or need help? Join our community on [Matrix](https://matrix.to/#/#vaultwarden:matrix.org), [GitHub Discussions](https://github.com/gazarrillo/quoota-vault/discussions) or [Discourse Forums](https://vaultwarden.discourse.group/).
-
-Encountered a bug or crash? Please search our issue tracker and discussions to see if it's already been reported. If not, please [start a new discussion](https://github.com/gazarrillo/quoota-vault/discussions) or [create a new issue](https://github.com/gazarrillo/quoota-vault/issues/). Ensure you're using the latest version of Quoota Vault and there aren't any similar issues open or closed!
-
-<br>
-
-## Contributors
-
-Thanks for your contribution to the project!
-
-[![Contributors Count](https://img.shields.io/github/contributors-anon/dani-garcia/vaultwarden?style=for-the-badge&logo=vaultwarden&color=005AA4)](https://github.com/gazarrillo/quoota-vault/graphs/contributors)<br>
-[![Contributors Avatars](https://contributors-img.web.app/image?repo=dani-garcia/vaultwarden)](https://github.com/gazarrillo/quoota-vault/graphs/contributors)
-
-<br>
-
 ## Disclaimer
 
 **This project is not associated with [Bitwarden](https://bitwarden.com/) or Bitwarden, Inc.**
@@ -139,8 +120,3 @@ The maintainers work together to set the direction for the project, focusing on 
 **Please note:** We cannot be held liable for any data loss that may occur while using Quoota Vault. This includes passwords, attachments, and other information handled by the application. We highly recommend performing regular backups of your files and database. However, should you experience data loss, we encourage you to contact us immediately.
 
 <br>
-
-## Bitwarden_RS
-
-This project was known as Bitwarden_RS and has been renamed to separate itself from the official Bitwarden server in the hopes of avoiding confusion and trademark/branding issues.<br>
-Please see [#1642 - v1.21.0 release and project rename to Quoota Vault](https://github.com/gazarrillo/quoota-vault/discussions/1642) for more explanation.
