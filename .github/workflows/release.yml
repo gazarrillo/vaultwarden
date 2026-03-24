@@ -3,7 +3,7 @@ permissions: {}
 
 concurrency:
   # Apply concurrency control only on the upstream repo
-  group: ${{ github.repository == 'dani-garcia/vaultwarden' && format('{0}-{1}', github.workflow, github.ref) || github.run_id }}
+  group: ${{ github.repository == 'dani-garcia/quoota-vault' && format('{0}-{1}', github.workflow, github.ref) || github.run_id }}
   # Don't cancel other runs when creating a tag
   cancel-in-progress: ${{ github.ref_type == 'branch' }}
 
@@ -36,8 +36,8 @@ defaults:
 
 jobs:
   docker-build:
-    name: Build Vaultwarden containers
-    if: ${{ github.repository == 'dani-garcia/vaultwarden' }}
+    name: Build Quoota Vault containers
+    if: ${{ github.repository == 'gazarrillo/quoota-vault' }}
     environment: release
     permissions:
       packages: write # Needed to upload packages and artifacts
@@ -231,19 +231,19 @@ jobs:
         env:
           NORMALIZED_ARCH: ${{ env.NORMALIZED_ARCH }}
         run: |
-          mv ./output/vaultwarden vaultwarden-"${NORMALIZED_ARCH}"
+          mv ./output/quoota-vault quoota-vault-"${NORMALIZED_ARCH}"
 
       # Upload artifacts to Github Actions and Attest the binaries
       - name: Attest binaries
         uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
         with:
-          subject-path: vaultwarden-${{ env.NORMALIZED_ARCH }}
+          subject-path: quoota-vault-${{ env.NORMALIZED_ARCH }}
 
       - name: Upload binaries as artifacts
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: vaultwarden-${{ env.SOURCE_VERSION }}-linux-${{ env.NORMALIZED_ARCH }}-${{ matrix.base_image }}
-          path: vaultwarden-${{ env.NORMALIZED_ARCH }}
+          name: quoota-vault-${{ env.SOURCE_VERSION }}-linux-${{ env.NORMALIZED_ARCH }}-${{ matrix.base_image }}
+          path: quoota-vault-${{ env.NORMALIZED_ARCH }}
 
   merge-manifests:
     name: Merge manifests

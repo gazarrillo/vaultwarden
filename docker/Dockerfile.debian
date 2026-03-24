@@ -16,18 +16,36 @@
 # be changed to point to a malicious image.
 #
 # To verify the current digest for a given tag name:
-# - From https://hub.docker.com/r/vaultwarden/web-vault/tags,
+# - From https://hub.docker.com/r/quoota-vault/web-vault/tags,
 #   click the tag name to view the digest of the image it currently points to.
 # - From the command line:
-#     $ docker pull docker.io/vaultwarden/web-vault:v2026.2.0
-#     $ docker image inspect --format "{{.RepoDigests}}" docker.io/vaultwarden/web-vault:v2026.2.0
-#     [docker.io/vaultwarden/web-vault@sha256:37c8661fa59dcdfbd3baa8366b6e950ef292b15adfeff1f57812b075c1fd3447]
+#     $ docker pull docker.io/quoota-vault/web-vault:v2026.2.0
+#     $ docker image inspect --format "{{.RepoDigests}}" docker.io/quoota-vault/web-vault:v2026.2.0
+#     [docker.io/quoota-vault/web-vault@sha256:37c8661fa59dcdfbd3baa8366b6e950ef292b15adfeff1f57812b075c1fd3447]
 #
 # - Conversely, to get the tag name from the digest:
-#     $ docker image inspect --format "{{.RepoTags}}" docker.io/vaultwarden/web-vault@sha256:37c8661fa59dcdfbd3baa8366b6e950ef292b15adfeff1f57812b075c1fd3447
-#     [docker.io/vaultwarden/web-vault:v2026.2.0]
+#     $ docker image inspect --format "{{.RepoTags}}" docker.io/quoota-vault/web-vault@sha256:37c8661fa59dcdfbd3baa8366b6e950ef292b15adfeff1f57812b075c1fd3447
+#     [docker.io/quoota-vault/web-vault:v2026.2.0]
 #
 FROM --platform=linux/amd64 docker.io/vaultwarden/web-vault@sha256:37c8661fa59dcdfbd3baa8366b6e950ef292b15adfeff1f57812b075c1fd3447 AS vault
+
+######################## VAULT PATCH IMAGE ########################
+# Patch web vault to apply Quoota Vault branding over Bitwarden defaults
+FROM --platform=linux/amd64 docker.io/library/alpine:3 AS vault-patched
+COPY --from=vault /web-vault /web-vault
+# Replace Bitwarden logo files with Quoota Vault versions
+COPY src/static/images/quoota_logo_black.png /web-vault/images/logo.png
+COPY src/static/images/quoota-logo-white.png /web-vault/images/logo-white.png
+# Patch app title, alt text, and PWA manifest name
+RUN sed -i \
+        -e 's|Bitwarden Web vault|Quoota Vault|g' \
+        -e 's|alt="Bitwarden"|alt="Quoota Vault"|g' \
+        /web-vault/index.html && \
+    sed -i \
+        -e 's|"name": "Bitwarden Vault"|"name": "Quoota Vault"|g' \
+        -e 's|"name": "Bitwarden"|"name": "Quoota Vault"|g' \
+        -e 's|"short_name": "Bitwarden"|"short_name": "Quoota Vault"|g' \
+        /web-vault/manifest.webmanifest 2>/dev/null || true
 
 ########################## Cross Compile Docker Helper Scripts ##########################
 ## We use the linux/amd64 no matter which Build Platform, since these are all bash scripts
@@ -189,8 +207,8 @@ WORKDIR /
 
 COPY docker/healthcheck.sh docker/start.sh /
 
-COPY --from=vault /web-vault ./web-vault
-COPY --from=build /app/target/final/vaultwarden .
+COPY --from=vault-patched /web-vault ./web-vault
+COPY --from=build /app/target/final/quoota-vault .
 
 HEALTHCHECK --interval=60s --timeout=10s CMD ["/healthcheck.sh"]
 

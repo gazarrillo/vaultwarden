@@ -1,4 +1,4 @@
-Vaultwarden tries to prevent security issues but there could always slip something through.
+Quoota Vault tries to prevent security issues but there could always slip something through.
 If you believe you've found a security issue in our application, we encourage you to
 notify us. We welcome working with you to resolve the issue promptly. Thanks in advance!
 
@@ -14,18 +14,18 @@ notify us. We welcome working with you to resolve the issue promptly. Thanks in 
 
 # In-scope
 
-- Security issues in any current release of Vaultwarden. Source code is available at https://github.com/dani-garcia/vaultwarden. This includes the current `latest` release and `main / testing` release.
+- Security issues in any current release of Quoota Vault. Source code is available at https://github.com/gazarrillo/quoota-vault. This includes the current `latest` release and `main / testing` release.
 
 # Exclusions
 
 The following bug classes are out-of scope:
 
-- Bugs that are already reported on Vaultwarden's issue tracker (https://github.com/dani-garcia/vaultwarden/issues)
-- Bugs that are not part of Vaultwarden, like on the web-vault or mobile and desktop clients. These issues need to be reported in the respective project issue tracker at https://github.com/bitwarden to which we are not associated
+- Bugs that are already reported on Quoota Vault's issue tracker (https://github.com/gazarrillo/quoota-vault/issues)
+- Bugs that are not part of Quoota Vault, like on the web-vault or mobile and desktop clients. These issues need to be reported in the respective project issue tracker at https://github.com/bitwarden to which we are not associated
 - Issues in an upstream software dependency (ex: Rust, or External Libraries) which are already reported to the upstream maintainer
 - Attacks requiring physical access to a user's device
-- Issues related to software or protocols not under Vaultwarden's control
-- Vulnerabilities in outdated versions of Vaultwarden
+- Issues related to software or protocols not under Quoota Vault's control
+- Vulnerabilities in outdated versions of Quoota Vault
 - Missing security best practices that do not directly lead to a vulnerability (You may still report them as a normal issue)
 - Issues that do not have any impact on the general public
 
@@ -33,9 +33,9 @@ While researching, we'd like to ask you to refrain from:
 
 - Denial of service
 - Spamming
-- Social engineering (including phishing) of Vaultwarden developers, contributors or users
+- Social engineering (including phishing) of Quoota Vault developers, contributors or users
 
-Thank you for helping keep Vaultwarden and our users safe!
+Thank you for helping keep Quoota Vault and our users safe!
 
 # How to contact us
 

@@ -1,10 +1,10 @@
 services:
-  vaultwarden:
-    image: vaultwarden/server:latest
-    container_name: vaultwarden
+  quoota-vault:
+    image: ghcr.io/gazarrillo/quoota-vault:testing
+    container_name: quoota-vault
     restart: unless-stopped
     volumes:
-      - /data/vaultwarden:/data
+      - /data/quoota-vault:/data
     env_file:
       - .env
     environment:

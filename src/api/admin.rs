@@ -108,7 +108,7 @@ const DT_FMT: &str = "%Y-%m-%d %H:%M:%S %Z";
 
 const BASE_TEMPLATE: &str = "admin/base";
 
-const ACTING_ADMIN_USER: &str = "vaultwarden-admin-00000-000000000000";
+const ACTING_ADMIN_USER: &str = "quoota-vault-admin-00000-000000000000";
 pub const FAKE_ADMIN_UUID: &str = "00000000-0000-0000-0000-000000000000";
 
 fn admin_path() -> String {
@@ -624,7 +624,7 @@ async fn get_text_api(url: &str) -> Result<String, Error> {
 }
 
 async fn has_http_access() -> bool {
-    let Ok(req) = make_http_request(Method::HEAD, "https://github.com/dani-garcia/vaultwarden") else {
+    let Ok(req) = make_http_request(Method::HEAD, "https://github.com/gazarrillo/quoota-vault") else {
         return false;
     };
     match req.send().await {
@@ -636,19 +636,19 @@ async fn has_http_access() -> bool {
 use cached::proc_macro::cached;
 /// Cache this function to prevent API call rate limit. Github only allows 60 requests per hour, and we use 3 here already
 /// It will cache this function for 600 seconds (10 minutes) which should prevent the exhaustion of the rate limit
-/// Any cache will be lost if Vaultwarden is restarted
+/// Any cache will be lost if Quoota Vault is restarted
 #[cached(time = 600, sync_writes = "default")]
 async fn get_release_info(has_http_access: bool) -> (String, String, String) {
     // If the HTTP Check failed, do not even attempt to check for new versions since we were not able to connect with github.com anyway.
     if has_http_access {
         (
-            match get_json_api::<GitRelease>("https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest")
+            match get_json_api::<GitRelease>("https://api.github.com/repos/gazarrillo/quoota-vault/releases/latest")
                 .await
             {
                 Ok(r) => r.tag_name,
                 _ => "-".to_string(),
             },
-            match get_json_api::<GitCommit>("https://api.github.com/repos/dani-garcia/vaultwarden/commits/main").await {
+            match get_json_api::<GitCommit>("https://api.github.com/repos/gazarrillo/quoota-vault/commits/main").await {
                 Ok(mut c) => {
                     c.sha.truncate(8);
                     c.sha

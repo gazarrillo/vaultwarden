@@ -161,7 +161,7 @@ impl DuoClient {
         post_body.insert("client_id", self.client_id.clone());
 
         let res = match make_http_request(reqwest::Method::POST, &health_check_url)?
-            .header(header::USER_AGENT, "vaultwarden:Duo/2.0 (Rust)")
+            .header(header::USER_AGENT, "quoota-vault:Duo/2.0 (Rust)")
             .form(&post_body)
             .send()
             .await
@@ -264,7 +264,7 @@ impl DuoClient {
         post_body.insert("client_assertion", token);
 
         let res = match make_http_request(reqwest::Method::POST, &token_url)?
-            .header(header::USER_AGENT, "vaultwarden:Duo/2.0 (Rust)")
+            .header(header::USER_AGENT, "quoota-vault:Duo/2.0 (Rust)")
             .form(&post_body)
             .send()
             .await

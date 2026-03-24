@@ -8,19 +8,19 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
 
-        Please **do not** submit feature requests or ask for help on how to configure Vaultwarden here!
+        Please **do not** submit feature requests or ask for help on how to configure Quoota Vault here!
 
-        The [GitHub Discussions](https://github.com/dani-garcia/vaultwarden/discussions/) has sections for Questions and Ideas.
+        The [GitHub Discussions](https://github.com/gazarrillo/quoota-vault/discussions/) has sections for Questions and Ideas.
 
-        Our [Wiki](https://github.com/dani-garcia/vaultwarden/wiki/) has topics on how to configure Vaultwarden.
+        Our [Wiki](https://github.com/gazarrillo/quoota-vault/wiki/) has topics on how to configure Quoota Vault.
 
-        Also, make sure you are running [![GitHub Release](https://img.shields.io/github/release/dani-garcia/vaultwarden.svg)](https://github.com/dani-garcia/vaultwarden/releases/latest) of Vaultwarden!
+        Also, make sure you are running [![GitHub Release](https://img.shields.io/github/release/dani-garcia/vaultwarden.svg)](https://github.com/gazarrillo/quoota-vault/releases/latest) of Quoota Vault!
 
-        Be sure to check and validate the Vaultwarden Admin Diagnostics (`/admin/diagnostics`) page for any errors!
-        See here [how to enable the admin page](https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page).
+        Be sure to check and validate the Quoota Vault Admin Diagnostics (`/admin/diagnostics`) page for any errors!
+        See here [how to enable the admin page](https://github.com/gazarrillo/quoota-vault/wiki/Enabling-admin-page).
 
         > [!IMPORTANT]
-        > ## :bangbang: Search for existing **Closed _AND_ Open** [Issues](https://github.com/dani-garcia/vaultwarden/issues?q=is%3Aissue%20) **_AND_** [Discussions](https://github.com/dani-garcia/vaultwarden/discussions?discussions_q=) regarding your topic before posting! :bangbang:
+        > ## :bangbang: Search for existing **Closed _AND_ Open** [Issues](https://github.com/gazarrillo/quoota-vault/issues?q=is%3Aissue%20) **_AND_** [Discussions](https://github.com/gazarrillo/quoota-vault/discussions?discussions_q=) regarding your topic before posting! :bangbang:
   #
   - type: checkboxes
     id: checklist
@@ -28,18 +28,18 @@ body:
       label: Prerequisites
       description: Please confirm you have completed the following before submitting an issue!
       options:
-        - label: I have searched the existing **Closed _AND_ Open** [Issues](https://github.com/dani-garcia/vaultwarden/issues?q=is%3Aissue%20) **_AND_** [Discussions](https://github.com/dani-garcia/vaultwarden/discussions?discussions_q=)
+        - label: I have searched the existing **Closed _AND_ Open** [Issues](https://github.com/gazarrillo/quoota-vault/issues?q=is%3Aissue%20) **_AND_** [Discussions](https://github.com/gazarrillo/quoota-vault/discussions?discussions_q=)
           required: true
-        - label: I have searched and read the [documentation](https://github.com/dani-garcia/vaultwarden/wiki/)
+        - label: I have searched and read the [documentation](https://github.com/gazarrillo/quoota-vault/wiki/)
           required: true
   #
   - id: support-string
     type: textarea
     attributes:
-      label: Vaultwarden Support String
+      label: Quoota Vault Support String
       description: Output of the **Generate Support String** from the `/admin/diagnostics` page.
       placeholder: |
-        1. Go to the Vaultwarden Admin of your instance https://example.domain.tld/admin/diagnostics
+        1. Go to the Quoota Vault Admin of your instance https://example.domain.tld/admin/diagnostics
         2. Click on `Generate Support String`
         3. Click on `Copy To Clipboard`
         4. Replace this text by pasting it into this textarea without any modifications
@@ -49,8 +49,8 @@ body:
   - id: version
     type: input
     attributes:
-      label: Vaultwarden Build Version
-      description: What version of Vaultwarden are you running?
+      label: Quoota Vault Build Version
+      description: What version of Quoota Vault are you running?
       placeholder: ex. v1.34.0 or v1.34.1-53f58b14
     validations:
       required: true
@@ -59,7 +59,7 @@ body:
     type: dropdown
     attributes:
       label: Deployment method
-      description: How did you deploy Vaultwarden?
+      description: How did you deploy Quoota Vault?
       multiple: false
       options:
         - Official Container Image
@@ -75,7 +75,7 @@ body:
     type: textarea
     attributes:
       label: Custom deployment method
-      description: If you deployed Vaultwarden via any other method, please describe how.
+      description: If you deployed Quoota Vault via any other method, please describe how.
   #
   - id: reverse-proxy
     type: input
@@ -90,7 +90,7 @@ body:
     type: dropdown
     attributes:
       label: Host/Server Operating System
-      description: On what operating system are you running the Vaultwarden server?
+      description: On what operating system are you running the Quoota Vault server?
       multiple: false
       options:
         - Linux
@@ -166,7 +166,7 @@ body:
     type: textarea
     attributes:
       label: Logs
-      description: Provide the logs generated by Vaultwarden during the time this issue occurs.
+      description: Provide the logs generated by Quoota Vault during the time this issue occurs.
       render: text
   #
   - id: screenshots

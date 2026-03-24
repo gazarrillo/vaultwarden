@@ -24,7 +24,7 @@ jobs:
   trivy-scan:
     # Only run this in the upstream repo and not on forks
     # When all forks run this at the same time, it is causing `Too Many Requests` issues
-    if: ${{ github.repository == 'dani-garcia/vaultwarden' }}
+    if: ${{ github.repository == 'dani-garcia/quoota-vault' }}
     name: Trivy Scan
     permissions:
       security-events: write # To write the security report

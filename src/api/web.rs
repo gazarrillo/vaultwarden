@@ -87,7 +87,7 @@ fn vaultwarden_css() -> Cached<Css<String>> {
         Ok(css) => css,
         Err(e) => {
             // Something went wrong compiling the scss. Use the fallback
-            warn!("Compiling the Vaultwarden SCSS styles failed. {e}");
+            warn!("Compiling the Quoota Vault SCSS styles failed. {e}");
             let mut css_options = css_options;
             css_options["load_user_scss"] = json!(false);
             let scss = CONFIG
@@ -222,8 +222,8 @@ pub fn static_files(filename: &str) -> Result<(ContentType, &'static [u8]), Erro
         "logo-gray.png" => Ok((ContentType::PNG, include_bytes!("../static/images/logo-gray.png"))),
         "error-x.svg" => Ok((ContentType::SVG, include_bytes!("../static/images/error-x.svg"))),
         "hibp.png" => Ok((ContentType::PNG, include_bytes!("../static/images/hibp.png"))),
-        "vaultwarden-icon.png" => Ok((ContentType::PNG, include_bytes!("../static/images/vaultwarden-icon.png"))),
-        "vaultwarden-favicon.png" => Ok((ContentType::PNG, include_bytes!("../static/images/vaultwarden-favicon.png"))),
+        "quoota_icon_black.png" => Ok((ContentType::PNG, include_bytes!("../static/images/quoota_icon_black.png"))),
+        "quoota-favicon.ico" => Ok((ContentType::PNG, include_bytes!("../static/images/quoota-favicon.ico"))),
         "404.css" => Ok((ContentType::CSS, include_bytes!("../static/scripts/404.css"))),
         "admin.css" => Ok((ContentType::CSS, include_bytes!("../static/scripts/admin.css"))),
         "admin.js" => Ok((ContentType::JavaScript, include_bytes!("../static/scripts/admin.js"))),

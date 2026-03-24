@@ -60,10 +60,10 @@ group "default" {
 function "labels" {
   params = []
   result = {
-    "org.opencontainers.image.description" = "Unofficial Bitwarden compatible server written in Rust - ${SOURCE_VERSION}"
+    "org.opencontainers.image.description" = "Self-hosted Bitwarden compatible server - ${SOURCE_VERSION}"
     "org.opencontainers.image.licenses" = "AGPL-3.0-only"
-    "org.opencontainers.image.documentation" = "https://github.com/dani-garcia/vaultwarden/wiki"
-    "org.opencontainers.image.url" = "https://github.com/dani-garcia/vaultwarden"
+    "org.opencontainers.image.documentation" = "https://github.com/gazarrillo/quoota-vault"
+    "org.opencontainers.image.url" = "https://github.com/gazarrillo/quoota-vault"
     "org.opencontainers.image.created" =  "${formatdate("YYYY-MM-DD'T'hh:mm:ssZZZZZ", timestamp())}"
     "org.opencontainers.image.source" = "${SOURCE_REPOSITORY_URL}"
     "org.opencontainers.image.revision" = "${SOURCE_COMMIT}"

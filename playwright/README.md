@@ -91,7 +91,7 @@ When creating new scenario use the recorder to more easily identify elements
 This does not start the server, you will need to start it manually.
 
 ```bash
-DOCKER_BUILDKIT=1 docker compose --profile playwright --env-file test.env up Vaultwarden
+DOCKER_BUILDKIT=1 docker compose --profile playwright --env-file test.env up Quoota Vault
 npx playwright codegen "http://127.0.0.1:8003"
 ```
 
@@ -103,20 +103,20 @@ Simplest is to set and uncomment `PW_VW_REPO_URL` and `PW_VW_COMMIT_HASH` in the
 Ensure that the image is built with:
 
 ```bash
-DOCKER_BUILDKIT=1 docker compose --profile playwright --env-file test.env build Vaultwarden
+DOCKER_BUILDKIT=1 docker compose --profile playwright --env-file test.env build Quoota Vault
 ```
 
 You can check the result running:
 
 ```bash
-DOCKER_BUILDKIT=1 docker compose --profile playwright --env-file test.env up Vaultwarden
+DOCKER_BUILDKIT=1 docker compose --profile playwright --env-file test.env up Quoota Vault
 ```
 
 Then check `http://127.0.0.1:8003/admin/diagnostics` with `admin`.
 
 # OpenID Connect test setup
 
-Additionally this `docker-compose` template allows to run locally Vaultwarden,
+Additionally this `docker-compose` template allows to run locally Quoota Vault,
 [Keycloak](https://www.keycloak.org/) and [Maildev](https://github.com/timshel/maildev) to test OIDC.
 
 ## Setup
@@ -126,10 +126,10 @@ First create a copy of `.env.template` as `.env` (This is done to prevent commit
 
 ## Usage
 
-Then start the stack (the `profile` is required to run `Vaultwarden`) :
+Then start the stack (the `profile` is required to run `Quoota Vault`) :
 
 ```bash
-> docker compose --profile vaultwarden --env-file .env up
+> docker compose --profile quoota-vault --env-file .env up
 ....
 keycloakSetup_1  | Logging into http://127.0.0.1:8080 as user admin of realm master
 keycloakSetup_1  | Created new realm with id 'test'
@@ -142,7 +142,7 @@ Wait until `oidc_keycloakSetup_1 exited with code 0` which indicates the correct
 
 Then you can access :
 
-- `Vaultwarden` on http://0.0.0.0:8000 with the default user `test@yopmail.com/test`.
+- `Quoota Vault` on http://0.0.0.0:8000 with the default user `test@yopmail.com/test`.
 - `Keycloak` on http://0.0.0.0:8080/admin/master/console/ with the default user `admin/admin`
 - `Maildev` on http://0.0.0.0:1080
 
@@ -156,24 +156,24 @@ You can run just `Keycloak` with `--profile keycloak`:
 ```bash
 > docker compose --profile keycloak --env-file .env up
 ```
-When running with a local Vaultwarden, you can use a front-end build from [dani-garcia/bw_web_builds](https://github.com/dani-garcia/bw_web_builds/releases).
+When running with a local Quoota Vault, you can use a front-end build from [dani-garcia/bw_web_builds](https://github.com/dani-garcia/bw_web_builds/releases).
 
-## Rebuilding the Vaultwarden
+## Rebuilding the Quoota Vault
 
-To force rebuilding the Vaultwarden image you can run
+To force rebuilding the Quoota Vault image you can run
 
 ```bash
-docker compose --profile vaultwarden --env-file .env build VaultwardenPrebuild Vaultwarden
+docker compose --profile quoota-vault --env-file .env build Quoota VaultPrebuild Quoota Vault
 ```
 
 ## Configuration
 
-All configuration for `keycloak` / `Vaultwarden` / `keycloak_setup.sh` can be found in [.env](.env.template).
+All configuration for `keycloak` / `Quoota Vault` / `keycloak_setup.sh` can be found in [.env](.env.template).
 The content of the file will be loaded as environment variables in all containers.
 
 - `keycloak` [configuration](https://www.keycloak.org/server/all-config) includes `KEYCLOAK_ADMIN` / `KEYCLOAK_ADMIN_PASSWORD` and any variable prefixed `KC_` ([more information](https://www.keycloak.org/server/configuration#_example_configuring_the_db_url_host_parameter)).
-- All `Vaultwarden` configuration can be set (EX: `SMTP_*`)
+- All `Quoota Vault` configuration can be set (EX: `SMTP_*`)
 
 ## Cleanup
 
-Use `docker compose --profile vaultwarden down`.
+Use `docker compose --profile quoota-vault down`.

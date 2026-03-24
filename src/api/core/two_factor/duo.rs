@@ -215,7 +215,7 @@ async fn duo_api_request(method: &str, path: &str, params: &str, data: &DuoData)
 
     make_http_request(m, &url)?
         .basic_auth(username, Some(password))
-        .header(header::USER_AGENT, "vaultwarden:Duo/1.0 (Rust)")
+        .header(header::USER_AGENT, "quoota-vault:Duo/1.0 (Rust)")
         .header(header::DATE, date)
         .send()
         .await?

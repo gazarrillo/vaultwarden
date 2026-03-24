@@ -77,7 +77,7 @@ async fn main() -> Result<(), Error> {
 
     check_data_folder().await;
     auth::initialize_keys().await.unwrap_or_else(|e| {
-        error!("Error creating private key '{}'\n{e:?}\nExiting Vaultwarden!", CONFIG.private_rsa_key());
+        error!("Error creating private key '{}'\n{e:?}\nExiting Quoota Vault!", CONFIG.private_rsa_key());
         exit(1);
     });
     check_web_vault();
@@ -97,7 +97,7 @@ const HELP: &str = "\
 Alternative implementation of the Bitwarden server API written in Rust
 
 USAGE:
-    vaultwarden [FLAGS|COMMAND]
+    quoota-vault [FLAGS|COMMAND]
 
 FLAGS:
     -h, --help       Prints help information
@@ -114,20 +114,20 @@ PRESETS:                  m=         t=          p=
 
 ";
 
-pub const VERSION: Option<&str> = option_env!("VW_VERSION");
+pub const VERSION: Option<&str> = option_env!("QV_VERSION").or(option_env!("VW_VERSION")).or(option_env!("BWRS_VERSION"));
 
 fn parse_args() {
     let mut pargs = pico_args::Arguments::from_env();
     let version = VERSION.unwrap_or("(Version info from Git not present)");
 
     if pargs.contains(["-h", "--help"]) {
-        println!("Vaultwarden {version}");
+        println!("Quoota Vault {version}");
         print!("{HELP}");
         exit(0);
     } else if pargs.contains(["-v", "--version"]) {
         config::SKIP_CONFIG_VALIDATION.store(true, Ordering::Relaxed);
         let web_vault_version = util::get_active_web_release();
-        println!("Vaultwarden {version}");
+        println!("Quoota Vault {version}");
         println!("Web-Vault {web_vault_version}");
         exit(0);
     }
@@ -206,7 +206,7 @@ fn launch_info() {
     println!(
         "\
         /--------------------------------------------------------------------\\\n\
-        |                        Starting Vaultwarden                        |"
+        |                        Starting Quoota Vault                       |"
     );
 
     if let Some(version) = VERSION {
@@ -219,10 +219,9 @@ fn launch_info() {
         | This is an *unofficial* Bitwarden implementation, DO NOT use the   |\n\
         | official channels to report bugs/features, regardless of client.   |\n\
         | Send usage/configuration questions or feature requests to:         |\n\
-        |   https://github.com/dani-garcia/vaultwarden/discussions or        |\n\
-        |   https://vaultwarden.discourse.group/                             |\n\
+        |   https://github.com/gazarrillo/quoota-vault/discussions           |\n\
         | Report suspected bugs/issues in the software itself at:            |\n\
-        |   https://github.com/dani-garcia/vaultwarden/issues/new            |\n\
+        |   https://github.com/gazarrillo/quoota-vault/issues/new            |\n\
         \\--------------------------------------------------------------------/\n"
     );
 }
@@ -256,7 +255,7 @@ fn init_logging() -> Result<log::LevelFilter, Error> {
 
         (level, levels_override)
     } else {
-        err!(format!("LOG_LEVEL should follow the format info,vaultwarden::api::icons=debug, invalid: {config_str}"))
+        err!(format!("LOG_LEVEL should follow the format info,quoota_vault::api::icons=debug, invalid: {config_str}"))
     };
 
     // Depending on the main log level we either want to disable or enable logging for hickory.
@@ -299,8 +298,8 @@ fn init_logging() -> Result<log::LevelFilter, Error> {
         ("_", rocket_underscore_level),
         ("rocket::response::responder::_", rocket_underscore_level),
         ("rocket::server::_", rocket_underscore_level),
-        ("vaultwarden::api::admin::_", rocket_underscore_level),
-        ("vaultwarden::api::notifications::_", rocket_underscore_level),
+        ("quoota_vault::api::admin::_", rocket_underscore_level),
+        ("quoota_vault::api::notifications::_", rocket_underscore_level),
         // Silence Rocket logs
         ("rocket::launch", log::LevelFilter::Error),
         ("rocket::launch_", log::LevelFilter::Error),
@@ -320,12 +319,12 @@ fn init_logging() -> Result<log::LevelFilter, Error> {
         // SMTP
         ("lettre::transport::smtp", smtp_log_level),
         // Set query_logger default to Off, but can be overwritten manually
-        // You can set LOG_LEVEL=info,vaultwarden::db::query_logger=<LEVEL> to overwrite it.
+        // You can set LOG_LEVEL=info,quoota_vault::db::query_logger=<LEVEL> to overwrite it.
         // This makes it possible to do the following:
         // warn = Print slow queries only, 5 seconds or longer
         // info = Print slow queries only, 1 second or longer
         // debug = Print all queries
-        ("vaultwarden::db::query_logger", log::LevelFilter::Off),
+        ("quoota_vault::db::query_logger", log::LevelFilter::Off),
     ]);
 
     for (path, level) in levels_override.into_iter() {
@@ -424,7 +423,7 @@ fn chain_syslog(logger: fern::Dispatch) -> fern::Dispatch {
     let syslog_fmt = syslog::Formatter3164 {
         facility: syslog::Facility::LOG_USER,
         hostname: None,
-        process: "vaultwarden".into(),
+        process: "quoota-vault".into(),
         pid: 0,
     };
 
@@ -498,7 +497,7 @@ async fn check_data_folder() {
 /// If not created manually, then the data will not be persistent.
 /// A none persistent volume in either Docker or Podman is represented by a 64 alphanumerical string.
 /// If we detect this string, we will alert about not having a persistent self defined volume.
-/// This probably means that someone forgot to add `-v /path/to/vaultwarden_data/:/data`
+/// This probably means that someone forgot to add `-v /path/to/quoota-vault_data/:/data`
 async fn container_data_folder_is_persistent(data_folder: &str) -> bool {
     if let Ok(mountinfo) = File::open("/proc/self/mountinfo").await {
         // Since there can only be one mountpoint to the DATA_FOLDER
@@ -538,7 +537,7 @@ fn check_web_vault() {
             "Web vault is not found at '{}'. To install it, please follow the steps in: ",
             CONFIG.web_vault_folder()
         );
-        error!("https://github.com/dani-garcia/vaultwarden/wiki/Building-binary#install-the-web-vault");
+        error!("https://github.com/gazarrillo/quoota-vault");
         error!("You can also set the environment variable 'WEB_VAULT_ENABLED=false' to disable it");
         exit(1);
     }
