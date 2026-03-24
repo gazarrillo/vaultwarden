@@ -114,7 +114,13 @@ PRESETS:                  m=         t=          p=
 
 ";
 
-pub const VERSION: Option<&str> = option_env!("QV_VERSION").or(option_env!("VW_VERSION")).or(option_env!("BWRS_VERSION"));
+pub const VERSION: Option<&str> = match option_env!("QV_VERSION") {
+    Some(v) => Some(v),
+    None => match option_env!("VW_VERSION") {
+        Some(v) => Some(v),
+        None => option_env!("BWRS_VERSION"),
+    },
+};
 
 fn parse_args() {
     let mut pargs = pico_args::Arguments::from_env();
